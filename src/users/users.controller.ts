@@ -1,15 +1,36 @@
-import { Body, Controller, Get, Post, Param, Query, Delete, Patch } from '@nestjs/common';
+import { Body, Controller, Get, Post, Param, Query, Delete, Patch, Session } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { SignUpDto } from './dto/signup-user.dto';
 import { UpdateReportDto } from '../reports/dto/update-report.dto';
+import { Serialize } from 'src/interceptors/serialize.interceptor';
+import { UserDto } from './dto/user.dto';
+import { AuthService } from './auth.service';
+import { Currentuser } from './decorators/current-user.decorator';
 
 @Controller('auth')
+@Serialize(UserDto)
 export class UsersController {
-  constructor(private readonly usersService: UsersService) { }
+  constructor(private readonly usersService: UsersService, private readonly authService: AuthService) { }
 
   @Post("/signup")
-  async signup(@Body() body: SignUpDto) {
-    return this.usersService.create(body)
+  async signup(@Body() { email, password }: SignUpDto, @Session() session) {
+    const user = await this.authService.signup(email, password);
+    session.userId = user.id
+    return user;
+  }
+
+
+  @Post("/signin")
+  async signin(@Body() { email, password }: SignUpDto, @Session() session) {
+    const user = await this.authService.signin(email, password);
+    session.userId = user.id
+    return user;
+  }
+
+
+  @Get('/me')
+  async me(@Currentuser() user) {
+    return user
   }
 
   @Get(':id')

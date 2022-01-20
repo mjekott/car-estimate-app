@@ -6,26 +6,27 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.AppModule = void 0;
+exports.ReportsService = void 0;
 const common_1 = require("@nestjs/common");
-const typeorm_1 = require("@nestjs/typeorm");
-const users_module_1 = require("./users/users.module");
-const reports_module_1 = require("./reports/reports.module");
-let AppModule = class AppModule {
+let ReportsService = class ReportsService {
+    create(createReportDto) {
+        return 'This action adds a new report';
+    }
+    findAll() {
+        return `This action returns all reports`;
+    }
+    findOne(id) {
+        return `This action returns a #${id} report`;
+    }
+    update(id, updateReportDto) {
+        return `This action updates a #${id} report`;
+    }
+    remove(id) {
+        return `This action removes a #${id} report`;
+    }
 };
-AppModule = __decorate([
-    (0, common_1.Module)({
-        imports: [
-            typeorm_1.TypeOrmModule.forRoot({
-                type: 'sqlite',
-                database: 'db.sqlite',
-                autoLoadEntities: true,
-                synchronize: true,
-            }),
-            users_module_1.UsersModule,
-            reports_module_1.ReportsModule,
-        ],
-    })
-], AppModule);
-exports.AppModule = AppModule;
-//# sourceMappingURL=app.module.js.map
+ReportsService = __decorate([
+    (0, common_1.Injectable)()
+], ReportsService);
+exports.ReportsService = ReportsService;
+//# sourceMappingURL=reports.service.js.map
