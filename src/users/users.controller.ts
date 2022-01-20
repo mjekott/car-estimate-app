@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, Param, Query, Delete, Patch, Session } from '@nestjs/common';
+import { Body, Controller, Get, Post, Param, Query, Delete, Patch, Session, UseGuards, Req } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { SignUpDto } from './dto/signup-user.dto';
 import { UpdateReportDto } from '../reports/dto/update-report.dto';
@@ -6,6 +6,8 @@ import { Serialize } from 'src/interceptors/serialize.interceptor';
 import { UserDto } from './dto/user.dto';
 import { AuthService } from './auth.service';
 import { Currentuser } from './decorators/current-user.decorator';
+import { AuthGuard } from './auth.guard';
+import { Request } from 'express';
 
 @Controller('auth')
 @Serialize(UserDto)
@@ -28,7 +30,16 @@ export class UsersController {
   }
 
 
+  @Post('/signout')
+  @UseGuards(AuthGuard)
+  async signout(@Req() req: Request) {
+    req.session.userId = null
+
+  }
+
+
   @Get('/me')
+  @UseGuards(AuthGuard)
   async me(@Currentuser() user) {
     return user
   }

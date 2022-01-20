@@ -21,6 +21,7 @@ const serialize_interceptor_1 = require("../interceptors/serialize.interceptor")
 const user_dto_1 = require("./dto/user.dto");
 const auth_service_1 = require("./auth.service");
 const current_user_decorator_1 = require("./decorators/current-user.decorator");
+const auth_guard_1 = require("./auth.guard");
 let UsersController = class UsersController {
     constructor(usersService, authService) {
         this.usersService = usersService;
@@ -35,6 +36,9 @@ let UsersController = class UsersController {
         const user = await this.authService.signin(email, password);
         session.userId = user.id;
         return user;
+    }
+    async signout(req) {
+        req.session.userId = null;
     }
     async me(user) {
         return user;
@@ -69,7 +73,16 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], UsersController.prototype, "signin", null);
 __decorate([
+    (0, common_1.Post)('/signout'),
+    (0, common_1.UseGuards)(auth_guard_1.AuthGuard),
+    __param(0, (0, common_1.Req)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", Promise)
+], UsersController.prototype, "signout", null);
+__decorate([
     (0, common_1.Get)('/me'),
+    (0, common_1.UseGuards)(auth_guard_1.AuthGuard),
     __param(0, (0, current_user_decorator_1.Currentuser)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),
