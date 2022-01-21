@@ -1,0 +1,1 @@
+{"version":3,"file":"setup-app.js","sourceRoot":"","sources":["../src/setup-app.ts"],"names":[],"mappings":";;;AAAA,2CAAgD;AAEzC,MAAM,QAAQ,GAAG,CAAC,GAAQ,EAAE,EAAE;IACjC,GAAG,CAAC,eAAe,CAAC,KAAK,CAAC,CAAA;IAC1B,GAAG,CAAC,cAAc,CAAC,IAAI,uBAAc,CAAC;QAClC,SAAS,EAAE,IAAI;KAClB,CAAC,CAAC,CAAA;AAGP,CAAC,CAAA;AAPY,QAAA,QAAQ,YAOpB"}

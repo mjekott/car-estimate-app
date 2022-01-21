@@ -10,7 +10,7 @@ import { AuthGuard } from './auth.guard';
 import { Request } from 'express';
 
 @Controller('auth')
-@Serialize(UserDto)
+//@Serialize(UserDto) comment when running test
 export class UsersController {
   constructor(private readonly usersService: UsersService, private readonly authService: AuthService) { }
 

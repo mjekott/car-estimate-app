@@ -11,14 +11,20 @@ const common_1 = require("@nestjs/common");
 const typeorm_1 = require("@nestjs/typeorm");
 const users_module_1 = require("./users/users.module");
 const reports_module_1 = require("./reports/reports.module");
+const cookieSession = require("cookie-session");
 let AppModule = class AppModule {
+    configure(consumer) {
+        consumer.apply((cookieSession({
+            keys: ["sjsjsdjsfj"]
+        }))).forRoutes('*');
+    }
 };
 AppModule = __decorate([
     (0, common_1.Module)({
         imports: [
             typeorm_1.TypeOrmModule.forRoot({
                 type: 'sqlite',
-                database: 'db.sqlite',
+                database: process.env.NODE_ENV === "test" ? "test.sqlite" : 'db.sqlite',
                 autoLoadEntities: true,
                 synchronize: true,
             }),
