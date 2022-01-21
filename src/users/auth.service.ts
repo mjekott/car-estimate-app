@@ -9,7 +9,7 @@ export class AuthService {
 
     async signup(email: string, password: string) {
         let exist = await this.usersService.find(email);
-        console.log(exist)
+
         if (exist) {
             throw new BadRequestException('Email in use')
         }

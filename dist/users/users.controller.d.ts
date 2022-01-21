@@ -11,8 +11,8 @@ export declare class UsersController {
     signin({ email, password }: SignUpDto, session: any): Promise<import("./models/user").User>;
     signout(req: Request): Promise<void>;
     me(user: any): Promise<any>;
-    getUser(id: string): Promise<import("./models/user").User[]>;
+    getUser(id: string): Promise<import("./models/user").User>;
     findAllUsers(email: string): Promise<import("./models/user").User[]>;
-    removeUser(id: string): Promise<import("./models/user").User[]>;
-    updateUser(id: string, body: UpdateReportDto): Promise<import("./models/user").User[]>;
+    removeUser(id: string): Promise<import("./models/user").User>;
+    updateUser(id: string, body: UpdateReportDto): Promise<import("./models/user").User>;
 }

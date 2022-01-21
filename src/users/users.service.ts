@@ -22,7 +22,7 @@ export class UsersService {
     }
 
     async findOne(id: number) {
-        const user = this.repo.find({ id })
+        const user = this.repo.findOne({ id })
         if (!user) {
             throw new NotFoundException("user not found")
 

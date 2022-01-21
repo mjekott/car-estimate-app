@@ -39,6 +39,7 @@
     "typeorm": "^0.2.41"
   },
   "devDependencies": {
+    "@golevelup/ts-jest": "^0.3.2",
     "@nestjs/cli": "^8.0.0",
     "@nestjs/schematics": "^8.0.0",
     "@nestjs/testing": "^8.0.0",
@@ -76,6 +77,18 @@
       "**/*.(t|j)s"
     ],
     "coverageDirectory": "../coverage",
-    "testEnvironment": "node"
+    "testEnvironment": "node",
+    "coveragePathIgnorePatterns": [
+      "node_modules",
+      ".entity.ts",
+      ".dto.ts",
+      ".guard.ts",
+      ".module.ts",
+      ".constant.ts",
+      ".middlewares.ts",
+      "decorator.ts",
+      "interceptor.ts",
+      "main.ts"
+    ]
   }
 }

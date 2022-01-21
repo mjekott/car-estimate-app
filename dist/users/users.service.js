@@ -29,7 +29,7 @@ let UsersService = class UsersService {
         return this.repo.find(condtion);
     }
     async findOne(id) {
-        const user = this.repo.find({ id });
+        const user = this.repo.findOne({ id });
         if (!user) {
             throw new common_1.NotFoundException("user not found");
         }

@@ -19,7 +19,6 @@ let AuthService = class AuthService {
     }
     async signup(email, password) {
         let exist = await this.usersService.find(email);
-        console.log(exist);
         if (exist) {
             throw new common_1.BadRequestException('Email in use');
         }

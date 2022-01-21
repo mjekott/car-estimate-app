@@ -6,8 +6,8 @@ export declare class UsersService {
     constructor(repo: Repository<User>);
     create(data: SignUpDto): Promise<User>;
     findAll(condtion: any): Promise<User[]>;
-    findOne(id: number): Promise<User[]>;
+    findOne(id: number): Promise<User>;
     find(email: string): Promise<User>;
-    update(id: number, attrs: Partial<User>): Promise<User[]>;
-    remove(id: number): Promise<User[]>;
+    update(id: number, attrs: Partial<User>): Promise<User>;
+    remove(id: number): Promise<User>;
 }
