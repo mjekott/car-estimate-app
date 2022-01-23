@@ -16,62 +16,55 @@ exports.ReportsController = void 0;
 const common_1 = require("@nestjs/common");
 const reports_service_1 = require("./reports.service");
 const create_report_dto_1 = require("./dto/create-report.dto");
-const update_report_dto_1 = require("./dto/update-report.dto");
+const auth_guard_1 = require("../users/auth.guard");
+const current_user_decorator_1 = require("../users/decorators/current-user.decorator");
+const user_entity_1 = require("../users/models/user.entity");
+const serialize_interceptor_1 = require("../interceptors/serialize.interceptor");
+const report_dto_1 = require("./dto/report.dto");
+const approve_report_dto_1 = require("./dto/approve-report.dto");
+const get_estimate_report_dto_1 = require("./dto/get-estimate-report.dto");
 let ReportsController = class ReportsController {
     constructor(reportsService) {
         this.reportsService = reportsService;
     }
-    create(createReportDto) {
-        return this.reportsService.create(createReportDto);
+    create(createReportDto, user) {
+        return this.reportsService.create(user, createReportDto);
     }
-    findAll() {
-        return this.reportsService.findAll();
+    approveReport(id, approveReportDto, user) {
+        return this.reportsService.changeApproval(+id, user, approveReportDto);
     }
-    findOne(id) {
-        return this.reportsService.findOne(+id);
-    }
-    update(id, updateReportDto) {
-        return this.reportsService.update(+id, updateReportDto);
-    }
-    remove(id) {
-        return this.reportsService.remove(+id);
+    getEstimate(query) {
+        return this.reportsService.getEtimate(query);
     }
 };
 __decorate([
     (0, common_1.Post)(),
+    (0, common_1.UseGuards)(auth_guard_1.AuthGuard),
+    (0, serialize_interceptor_1.Serialize)(report_dto_1.ReportDto),
     __param(0, (0, common_1.Body)()),
+    __param(1, (0, current_user_decorator_1.Currentuser)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [create_report_dto_1.CreateReportDto]),
+    __metadata("design:paramtypes", [create_report_dto_1.CreateReportDto, user_entity_1.User]),
     __metadata("design:returntype", void 0)
 ], ReportsController.prototype, "create", null);
 __decorate([
-    (0, common_1.Get)(),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
-    __metadata("design:returntype", void 0)
-], ReportsController.prototype, "findAll", null);
-__decorate([
-    (0, common_1.Get)(':id'),
-    __param(0, (0, common_1.Param)('id')),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String]),
-    __metadata("design:returntype", void 0)
-], ReportsController.prototype, "findOne", null);
-__decorate([
     (0, common_1.Patch)(':id'),
+    (0, common_1.UseGuards)(auth_guard_1.AuthGuard),
+    (0, serialize_interceptor_1.Serialize)(report_dto_1.ReportDto),
     __param(0, (0, common_1.Param)('id')),
     __param(1, (0, common_1.Body)()),
+    __param(2, (0, current_user_decorator_1.Currentuser)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String, update_report_dto_1.UpdateReportDto]),
+    __metadata("design:paramtypes", [String, approve_report_dto_1.AproveReportDto, user_entity_1.User]),
     __metadata("design:returntype", void 0)
-], ReportsController.prototype, "update", null);
+], ReportsController.prototype, "approveReport", null);
 __decorate([
-    (0, common_1.Delete)(':id'),
-    __param(0, (0, common_1.Param)('id')),
+    (0, common_1.Get)(),
+    __param(0, (0, common_1.Query)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String]),
+    __metadata("design:paramtypes", [get_estimate_report_dto_1.GetEstimateReportDto]),
     __metadata("design:returntype", void 0)
-], ReportsController.prototype, "remove", null);
+], ReportsController.prototype, "getEstimate", null);
 ReportsController = __decorate([
     (0, common_1.Controller)('reports'),
     __metadata("design:paramtypes", [reports_service_1.ReportsService])

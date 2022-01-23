@@ -1,10 +1,12 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException, Query } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { CreateReportDto } from './dto/create-report.dto';
-import { UpdateReportDto } from './dto/update-report.dto';
 import { Report } from './models/report.entity';
 import { User } from '../users/models/user.entity';
+import { AproveReportDto } from './dto/approve-report.dto';
+import { Serialize } from 'src/interceptors/serialize.interceptor';
+import { GetEstimateReportDto } from './dto/get-estimate-report.dto';
 
 @Injectable()
 export class ReportsService {
@@ -21,15 +23,28 @@ export class ReportsService {
     return `This action returns all reports`;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} report`;
+  async findOne(id: number) {
+    const report = await this.repo.findOne(id, { relations: ["user"] })
+    if (!report) {
+      throw new NotFoundException(`Report with ${id} not found`)
+    }
+
+    return report
   }
 
-  update(id: number, updateReportDto: UpdateReportDto) {
-    return `This action updates a #${id} report`;
+  async changeApproval(id: number, user: User, { approved }: AproveReportDto) {
+    const report = await this.findOne(id);
+    report.approved = approved;
+    return this.repo.save(report)
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} report`;
+  async getEtimate(@Query() estimate: GetEstimateReportDto) {
+    return this.repo.createQueryBuilder().select('AVG(price)', 'price').where('make =:make', { make: estimate.make })
+      .andWhere('model = :model', { model: estimate.model })
+      .andWhere('lng -:lng BETWEEN -5 AND 5', { lng: estimate.lng })
+      .andWhere("lat -:lat BETWEEN -5 AND 5", { lat: estimate.lat }).
+      andWhere("year  -:year BETWEEN -3 AND 3", { year: estimate.year })
+      .andWhere('approved IS TRUE')
+      .orderBy('ABS(milage - :milage)', 'DESC').setParameters({ milage: estimate.milage }).limit(3).getRawMany()
   }
 }

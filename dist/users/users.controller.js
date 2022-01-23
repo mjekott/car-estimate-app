@@ -16,10 +16,12 @@ exports.UsersController = void 0;
 const common_1 = require("@nestjs/common");
 const users_service_1 = require("./users.service");
 const signup_user_dto_1 = require("./dto/signup-user.dto");
-const update_report_dto_1 = require("../reports/dto/update-report.dto");
+const serialize_interceptor_1 = require("../interceptors/serialize.interceptor");
+const user_dto_1 = require("./dto/user.dto");
 const auth_service_1 = require("./auth.service");
 const current_user_decorator_1 = require("./decorators/current-user.decorator");
 const auth_guard_1 = require("./auth.guard");
+const update_user_dto_1 = require("./dto/update-user.dto");
 let UsersController = class UsersController {
     constructor(usersService, authService) {
         this.usersService = usersService;
@@ -112,11 +114,12 @@ __decorate([
     __param(0, (0, common_1.Param)('id')),
     __param(1, (0, common_1.Body)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String, update_report_dto_1.UpdateReportDto]),
+    __metadata("design:paramtypes", [String, update_user_dto_1.UpdateUserDto]),
     __metadata("design:returntype", void 0)
 ], UsersController.prototype, "updateUser", null);
 UsersController = __decorate([
     (0, common_1.Controller)('auth'),
+    (0, serialize_interceptor_1.Serialize)(user_dto_1.UserDto),
     __metadata("design:paramtypes", [users_service_1.UsersService, auth_service_1.AuthService])
 ], UsersController);
 exports.UsersController = UsersController;

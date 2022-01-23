@@ -16,7 +16,7 @@ exports.UsersService = void 0;
 const common_1 = require("@nestjs/common");
 const typeorm_1 = require("@nestjs/typeorm");
 const typeorm_2 = require("typeorm");
-const user_1 = require("./models/user");
+const user_entity_1 = require("./models/user.entity");
 let UsersService = class UsersService {
     constructor(repo) {
         this.repo = repo;
@@ -50,7 +50,7 @@ let UsersService = class UsersService {
 };
 UsersService = __decorate([
     (0, common_1.Injectable)(),
-    __param(0, (0, typeorm_1.InjectRepository)(user_1.User)),
+    __param(0, (0, typeorm_1.InjectRepository)(user_entity_1.User)),
     __metadata("design:paramtypes", [typeorm_2.Repository])
 ], UsersService);
 exports.UsersService = UsersService;

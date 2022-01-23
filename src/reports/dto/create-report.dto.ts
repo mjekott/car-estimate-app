@@ -1,4 +1,4 @@
-import { IsString, IsNumber, IsLatitude, isLatitude, Min, MAX, Max, IsLongitude } from "class-validator"
+import { IsString, IsNumber, IsLatitude, Min, MAX, Max, IsLongitude } from "class-validator"
 
 
 export class CreateReportDto {
@@ -16,7 +16,7 @@ export class CreateReportDto {
     @IsNumber()
     @Min(0)
     @Max(1000000)
-    readonly mileage: number
+    readonly milage: number
 
     @IsLongitude()
     readonly lng: number

@@ -1,12 +1,12 @@
 import { ReportsService } from './reports.service';
 import { CreateReportDto } from './dto/create-report.dto';
-import { UpdateReportDto } from './dto/update-report.dto';
+import { User } from '../users/models/user.entity';
+import { AproveReportDto } from "./dto/approve-report.dto";
+import { GetEstimateReportDto } from './dto/get-estimate-report.dto';
 export declare class ReportsController {
     private readonly reportsService;
     constructor(reportsService: ReportsService);
-    create(createReportDto: CreateReportDto): string;
-    findAll(): string;
-    findOne(id: string): string;
-    update(id: string, updateReportDto: UpdateReportDto): string;
-    remove(id: string): string;
+    create(createReportDto: CreateReportDto, user: User): Promise<import("./models/report.entity").Report>;
+    approveReport(id: string, approveReportDto: AproveReportDto, user: User): Promise<import("./models/report.entity").Report>;
+    getEstimate(query: GetEstimateReportDto): Promise<any[]>;
 }

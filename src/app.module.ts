@@ -28,9 +28,11 @@ const cookieSession = require("cookie-session")
 
 })
 export class AppModule implements NestModule {
+
+  constructor(private configSerivce: ConfigService) { }
   configure(consumer: MiddlewareConsumer) {
     consumer.apply((cookieSession({
-      keys: ["sjsjsdjsfj"]
+      keys: [this.configSerivce.get<string>("COOKIE_KEY")]
     }))).forRoutes('*')
   }
 

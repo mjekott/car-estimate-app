@@ -11,7 +11,7 @@ const common_1 = require("@nestjs/common");
 const reports_service_1 = require("./reports.service");
 const reports_controller_1 = require("./reports.controller");
 const typeorm_1 = require("@nestjs/typeorm");
-const report_entity_1 = require("./entities/report.entity");
+const report_entity_1 = require("./models/report.entity");
 let ReportsModule = class ReportsModule {
 };
 ReportsModule = __decorate([
